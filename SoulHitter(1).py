@@ -9,14 +9,6 @@ def replace_line(file_name, line_num, text):
   out.writelines(lines)
   out.close()
 
-print'\x1b[1;36m   _____               _               '
-print'\x1b[1;36m  / ____|             | |              '
-print'\x1b[1;36m | |     _ __ __ _ ___| |__   ___ _ __ '
-print'\x1b[1;36m | |    |  __/ _` / __|  _ \ / _ \  __|'
-print'\x1b[1;36m | |____| | | (_| \__ \ | | |  __/ |   '
-print'\x1b[1;36m  \_____|_|  \__,_|___/_| |_|\___|_|   '
-print'\x1b[1;36m                                       '
-print'\x1b[1;37m[\x1b[1;36mCrasher\x1b[1;37m] \x1b[1;37mCnC AutoSetup \nDeveloped By \x1b[0;31mFlexingOnLamers\x1b[1;37m/\x1b[0;31mCri'
 
 ip = raw_input("\x1b[1;37mEnter Your Server IP:\x1b[1;35m")
 user = raw_input("\x1b[1;37mEnter Desired Username:\x1b[1;35m")
